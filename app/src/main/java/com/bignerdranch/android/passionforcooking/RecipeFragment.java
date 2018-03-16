@@ -2,7 +2,9 @@ package com.bignerdranch.android.passionforcooking;
 
 
 import android.os.Bundle;
+import android.provider.Telephony;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -22,6 +24,8 @@ import java.util.UUID;
 public class RecipeFragment extends Fragment {
 
     private static final String ARG_RECIPE_ID = "recipe_id";
+    private static final String DIALOG_RATE = "DialogRate";
+
 
     private Recipe mRecipe;
     private EditText mTitleField;
@@ -72,7 +76,15 @@ public class RecipeFragment extends Fragment {
 
         mDateButton = (Button) v.findViewById(R.id.recipe_date);
         mDateButton.setText(mRecipe.getDate().toString());
-        mDateButton.setEnabled(false);
+        //mDateButton.setEnabled(false);
+        mDateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager manager = getFragmentManager();
+                RateFragment dialog = new RateFragment();
+                dialog.show(manager, DIALOG_RATE);
+            }
+        });
 
         mLikedCheckBox = (CheckBox)v.findViewById(R.id.recipe_liked);
         mLikedCheckBox.setChecked(mRecipe.isLiked());
