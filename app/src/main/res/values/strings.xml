@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">PassionForCooking</string>
+    <string name="recipe_title_hint">Enter a title for the recipe.</string>
+    <string name="recipe_title_label">Title</string>
+    <string name="recipe_details_label">Details</string>
+    <string name="recipe_liked_label">Liked</string>
 </resources>
