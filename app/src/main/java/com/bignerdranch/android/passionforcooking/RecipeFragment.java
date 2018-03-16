@@ -13,21 +13,35 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
+import java.util.UUID;
+
 /**
  * Created by Paula on 15.3.2018.
  */
 
 public class RecipeFragment extends Fragment {
 
+    private static final String ARG_RECIPE_ID = "recipe_id";
+
     private Recipe mRecipe;
     private EditText mTitleField;
     private Button mDateButton;
     private CheckBox mLikedCheckBox;
 
+    public static RecipeFragment newInstance(UUID recipeId) {
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_RECIPE_ID, recipeId);
+
+        RecipeFragment fragment = new RecipeFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mRecipe = new Recipe();
+        UUID recipeId = (UUID) getArguments().getSerializable(ARG_RECIPE_ID);
+        mRecipe = RecipeLab.get(getActivity()).getRecipe(recipeId);
     }
 
     @Override
@@ -36,6 +50,7 @@ public class RecipeFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_recipe, container, false);
 
         mTitleField = (EditText) v.findViewById(R.id.recipe_title);
+        mTitleField.setText(mRecipe.getTitle());
         mTitleField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(
@@ -60,6 +75,7 @@ public class RecipeFragment extends Fragment {
         mDateButton.setEnabled(false);
 
         mLikedCheckBox = (CheckBox)v.findViewById(R.id.recipe_liked);
+        mLikedCheckBox.setChecked(mRecipe.isLiked());
         mLikedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView,

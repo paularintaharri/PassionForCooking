@@ -4,4 +4,7 @@
     <string name="recipe_title_label">Title</string>
     <string name="recipe_details_label">Details</string>
     <string name="recipe_liked_label">Liked</string>
+    <string name="recipe_next_button">Next</string>
+    <string name="recipe_prev_button">Prev</string>
+
 </resources>

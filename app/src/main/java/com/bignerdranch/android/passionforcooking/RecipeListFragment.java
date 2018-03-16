@@ -1,5 +1,6 @@
 package com.bignerdranch.android.passionforcooking;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -35,12 +36,23 @@ public class RecipeListFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateUI();
+    }
+
     private void updateUI() {
         RecipeLab recipeLab = RecipeLab.get(getActivity());
         List<Recipe> recipes = recipeLab.getRecipes();
 
-        mAdapter = new RecipeAdapter(recipes);
-        mRecipeRecyclerView.setAdapter(mAdapter);
+        if (mAdapter == null) {
+
+            mAdapter = new RecipeAdapter(recipes);
+            mRecipeRecyclerView.setAdapter(mAdapter);
+        }else {
+            mAdapter.notifyDataSetChanged();
+        }
     }
     private class RecipeHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
@@ -67,9 +79,8 @@ public class RecipeListFragment extends Fragment {
 
         @Override
         public void onClick(View view) {
-            Toast.makeText(getActivity(),
-                    mRecipe.getTitle() + " clicked!", Toast.LENGTH_SHORT)
-                    .show();
+            Intent intent = RecipePagerActivity.newIntent(getActivity(), mRecipe.getId());
+            startActivity(intent);
         }
     }
 
