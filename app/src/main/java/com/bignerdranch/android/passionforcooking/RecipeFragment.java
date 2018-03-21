@@ -1,6 +1,8 @@
 package com.bignerdranch.android.passionforcooking;
 
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Telephony;
 import android.support.v4.app.Fragment;
@@ -25,11 +27,14 @@ public class RecipeFragment extends Fragment {
 
     private static final String ARG_RECIPE_ID = "recipe_id";
     private static final String DIALOG_RATE = "DialogRate";
+    private static final int REQUEST_RATE = 0;
+
 
 
     private Recipe mRecipe;
     private EditText mTitleField;
     private Button mDateButton;
+    private Button mRateButton; //Rate recipe
     private CheckBox mLikedCheckBox;
 
     public static RecipeFragment newInstance(UUID recipeId) {
@@ -76,12 +81,27 @@ public class RecipeFragment extends Fragment {
 
         mDateButton = (Button) v.findViewById(R.id.recipe_date);
         mDateButton.setText(mRecipe.getDate().toString());
-        //mDateButton.setEnabled(false);
         mDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentManager manager = getFragmentManager();
                 RateFragment dialog = new RateFragment();
+                // RateFragment dialog = RateFragment
+               //         .newInstance(mRecipe.getDate());
+                dialog.show(manager, DIALOG_RATE);
+            }
+        });
+
+        //Rate button actions
+        mRateButton = (Button) v.findViewById(R.id.recipe_rate);
+        updateRate();
+        mRateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager manager = getFragmentManager();
+
+                RateFragment dialog = RateFragment.newInstance(mRecipe.getRate());
+                dialog.setTargetFragment(RecipeFragment.this, REQUEST_RATE);
                 dialog.show(manager, DIALOG_RATE);
             }
         });
@@ -97,6 +117,25 @@ public class RecipeFragment extends Fragment {
         });
 
         return v;
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+
+        if (requestCode == REQUEST_RATE) {
+            float rate = (float) data
+                    .getSerializableExtra(RateFragment.EXTRA_RATE);
+            mRecipe.setRate(rate);
+            updateRate();
+        }
+    }
+
+    private void updateRate() {
+        mRateButton.setText(String.valueOf(mRecipe.getRate()));
     }
 }
 

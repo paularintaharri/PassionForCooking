@@ -1,5 +1,7 @@
 package com.bignerdranch.android.passionforcooking;
 
+import android.provider.Telephony;
+
 import java.util.Date;
 import java.util.UUID;
 
@@ -13,11 +15,13 @@ public class Recipe {
     private String mTitle;
     private Date mDate;
     private boolean mLiked;
+    private float mRate;
 
 
     public Recipe() {
         mId = UUID.randomUUID();
         mDate = new Date();
+        //mRate = new Rate();
     }
 
     public UUID getId() {
@@ -30,6 +34,14 @@ public class Recipe {
 
     public void setTitle(String title) {
         mTitle = title;
+    }
+
+    public float getRate() {
+        return mRate;
+    }
+
+    public void setRate(float rate) {
+        mRate = rate;
     }
 
     public Date getDate() {

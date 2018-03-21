@@ -28,6 +28,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
+    <Button
+        android:id="@+id/recipe_rate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <CheckBox
         android:id="@+id/recipe_liked"
         android:layout_width="match_parent"

@@ -58,7 +58,7 @@ public class RecipeListFragment extends Fragment {
             implements View.OnClickListener {
         private Recipe mRecipe;
         private TextView mTitleTextView;
-        private TextView mDateTextView;
+        private TextView mRateTextView;
         private ImageView mLikedImageView;
 
         public RecipeHolder(LayoutInflater inflater, ViewGroup parent) {
@@ -66,14 +66,14 @@ public class RecipeListFragment extends Fragment {
             itemView.setOnClickListener(this);
 
             mTitleTextView = (TextView) itemView.findViewById(R.id.recipe_title);
-            mDateTextView = (TextView) itemView.findViewById(R.id.recipe_date);
+            mRateTextView = (TextView) itemView.findViewById(R.id.recipe_rate);
             mLikedImageView = (ImageView) itemView.findViewById(R.id.recipe_liked);
 
         }
         public void bind(Recipe recipe) {
             mRecipe = recipe;
             mTitleTextView.setText(mRecipe.getTitle());
-            mDateTextView.setText(mRecipe.getDate().toString());
+            mRateTextView.setText(String.valueOf(mRecipe.getRate()));
             mLikedImageView.setVisibility(recipe.isLiked() ? View.VISIBLE : View.GONE);
         }
 
