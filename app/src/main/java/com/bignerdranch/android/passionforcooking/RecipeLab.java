@@ -23,12 +23,17 @@ public class RecipeLab {
 
     private RecipeLab(Context context) {
         mRecipes = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+
+        for (int i = 0; i < 5; i++) {
             Recipe recipe = new Recipe();
             recipe.setTitle("Recipe " + i);
             recipe.setLiked(i % 2 == 0); // Every other one
             mRecipes.add(recipe);
         }
+    }
+
+    public void addRecipe(Recipe r) {
+        mRecipes.add(r);
     }
 
     public List<Recipe> getRecipes() {

@@ -8,10 +8,9 @@
     <string name="recipe_prev_button">Prev</string>
     <string name="rate_recipe_title">Rate recipe: </string>
     <string name="date_picker_title">Date:</string>
-
-    <string name="dialog_positive_toast_message">TOIMII </string>
-
-
-    dialog_positive_toast_message
+    <string name="new_recipe">New Recipe</string>
+    <string name="show_subtitle">Show Subtitle</string>
+    <string name="hide_subtitle">Hide Subtitle</string>
+    <string name="subtitle_format">%1$d recipes</string>
 
 </resources>
