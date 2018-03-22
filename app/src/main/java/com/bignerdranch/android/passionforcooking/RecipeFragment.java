@@ -11,13 +11,15 @@ import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -41,8 +43,6 @@ public class RecipeFragment extends Fragment {
     public static final String DATE_FORMAT = "dd.MM.yyyy";
     float currentRate;
 
-
-
     private Recipe mRecipe;
     private EditText mTitleField;
     private Button mDateButton;
@@ -61,8 +61,30 @@ public class RecipeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         UUID recipeId = (UUID) getArguments().getSerializable(ARG_RECIPE_ID);
         mRecipe = RecipeLab.get(getActivity()).getRecipe(recipeId);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.recipe_delet_menu, menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.delete_recipe:
+
+                RecipeLab recipeLab = RecipeLab.get(getActivity());
+                recipeLab.deleteItem(mRecipe.getId());
+
+                Intent intent = new Intent(getActivity(), RecipeListActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

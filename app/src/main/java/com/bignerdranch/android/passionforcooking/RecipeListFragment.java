@@ -27,6 +27,7 @@ import java.util.List;
 public class RecipeListFragment extends Fragment {
     private RecyclerView mRecipeRecyclerView;
     private RecipeAdapter mAdapter;
+    private TextView mTextView;
     private boolean mSubtitleVisible;
     private static final String SAVED_SUBTITLE_VISIBLE = "subtitle";
 
@@ -47,13 +48,16 @@ public class RecipeListFragment extends Fragment {
         mRecipeRecyclerView = (RecyclerView) view
                 .findViewById(R.id.recipe_recycler_view);
         mRecipeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mTextView = view.findViewById(R.id.no_recipe_there);
 
         if (savedInstanceState != null) {
             mSubtitleVisible = savedInstanceState.getBoolean(SAVED_SUBTITLE_VISIBLE);
         }
-
-        updateUI();
-
+        if(RecipeLab.get(getActivity()).getRecipes().size() <= 0) {
+            mTextView.setVisibility(View.VISIBLE);
+        } else {
+            updateUI();
+        }
         return view;
     }
 
@@ -104,8 +108,9 @@ public class RecipeListFragment extends Fragment {
 
     private void updateSubtitle() {
         RecipeLab recipeLab = RecipeLab.get(getActivity());
-        int recipeCount = recipeLab.getRecipes().size();
-        String subtitle = getString(R.string.subtitle_format, recipeCount);
+        int recipeSize = recipeLab.getRecipes().size();
+        String subtitle = getResources()
+                .getQuantityString(R.plurals.subtitle_plural,recipeSize, recipeSize);
 
         if (!mSubtitleVisible) {
             subtitle = null;

@@ -36,6 +36,11 @@ public class RecipeLab {
         mRecipes.add(r);
     }
 
+    public void deleteItem(UUID recipeID) {
+        Recipe recipe = getRecipe(recipeID);
+        mRecipes.remove(recipe);
+    }
+
     public List<Recipe> getRecipes() {
 
         return mRecipes;

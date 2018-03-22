@@ -9,8 +9,16 @@
     <string name="rate_recipe_title">Rate recipe: </string>
     <string name="date_picker_title">Date:</string>
     <string name="new_recipe">New Recipe</string>
+    <string name="delete_recipe">Delete Recipe</string>
     <string name="show_subtitle">Show Subtitle</string>
     <string name="hide_subtitle">Hide Subtitle</string>
     <string name="subtitle_format">%1$d recipes</string>
+    <string name="no_recipes_add">No recipes</string>
+    <plurals name="subtitle_plural">
+        <item quantity="one">%1$d recipe</item>
+        <item quantity="other">%1$d recipes</item>
+    </plurals>
+
+
 
 </resources>
