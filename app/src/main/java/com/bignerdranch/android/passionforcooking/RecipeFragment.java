@@ -67,6 +67,15 @@ public class RecipeFragment extends Fragment {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+
+        RecipeLab.get(getActivity())
+                .updateRecipe(mRecipe);
+    }
+
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.recipe_delet_menu, menu);

@@ -19,9 +19,12 @@ public class Recipe {
 
 
     public Recipe() {
-        mId = UUID.randomUUID();
+        this(UUID.randomUUID());
+
+    }
+    public Recipe(UUID id) {
+        mId = id;
         mDate = new Date();
-        //mRate = new Rate();
     }
 
     public UUID getId() {

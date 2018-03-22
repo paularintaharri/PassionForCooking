@@ -128,6 +128,7 @@ public class RecipeListFragment extends Fragment {
             mAdapter = new RecipeAdapter(recipes);
             mRecipeRecyclerView.setAdapter(mAdapter);
         }else {
+            mAdapter.setRecipes(recipes);
             mAdapter.notifyDataSetChanged();
         }
         updateSubtitle();
@@ -191,6 +192,10 @@ public class RecipeListFragment extends Fragment {
         @Override
         public int getItemCount() {
             return mRecipes.size();
+        }
+
+        public void setRecipes(List<Recipe> recipes) {
+            mRecipes = recipes;
         }
     }
 }
