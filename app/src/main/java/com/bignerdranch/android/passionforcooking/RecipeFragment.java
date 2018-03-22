@@ -3,6 +3,7 @@ package com.bignerdranch.android.passionforcooking;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.Telephony;
 import android.support.v4.app.Fragment;
@@ -22,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
+import static android.content.Context.MODE_PRIVATE;
 import static android.provider.Settings.System.DATE_FORMAT;
 
 /**
@@ -37,6 +39,8 @@ public class RecipeFragment extends Fragment {
     private static final int REQUEST_DATE = 1;
 
     public static final String DATE_FORMAT = "dd.MM.yyyy";
+    float currentRate;
+
 
 
     private Recipe mRecipe;
@@ -134,8 +138,7 @@ public class RecipeFragment extends Fragment {
         }
 
         if (requestCode == REQUEST_RATE) {
-            float rate = (float) data
-                    .getSerializableExtra(RateFragment.EXTRA_RATE);
+            float rate = (float) data.getSerializableExtra(RateFragment.EXTRA_RATE);
             mRecipe.setRate(rate);
             updateRate();
         }
@@ -151,6 +154,7 @@ public class RecipeFragment extends Fragment {
         mDateButton.setText(dateFormat.format(mRecipe.getDate()));}
 
     private void updateRate() {
+
         mRateButton.setText(String.valueOf(mRecipe.getRate()));
 
     }
