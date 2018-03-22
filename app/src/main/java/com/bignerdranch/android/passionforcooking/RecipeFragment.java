@@ -84,12 +84,8 @@ public class RecipeFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.delete_recipe:
-
-                RecipeLab recipeLab = RecipeLab.get(getActivity());
-                recipeLab.deleteItem(mRecipe.getId());
-
-                Intent intent = new Intent(getActivity(), RecipeListActivity.class);
-                startActivity(intent);
+                RecipeLab.get(getActivity()).deleteItem(mRecipe);
+                getActivity().finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

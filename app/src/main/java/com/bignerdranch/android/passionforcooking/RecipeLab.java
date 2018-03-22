@@ -18,8 +18,6 @@ import java.util.UUID;
 
 public class RecipeLab {
     private static RecipeLab sRecipeLab;
-
-   //private List<Recipe> mRecipes;
     private Context mContext;
     private SQLiteDatabase mDatabase;
 
@@ -34,31 +32,21 @@ public class RecipeLab {
         mContext = context.getApplicationContext();
         mDatabase = new RecipeBaseHelper(mContext)
                 .getWritableDatabase();
-        //mRecipes = new ArrayList<>();
-
-       /* for (int i = 0; i < 5; i++) {
-            Recipe recipe = new Recipe();
-            recipe.setTitle("Recipe " + i);
-            recipe.setLiked(i % 2 == 0); // Every other one
-            mRecipes.add(recipe);
-        } */
     }
 
     public void addRecipe(Recipe r) {
         ContentValues values = getContentValues(r);
         mDatabase.insert(RecipeTable.NAME, null, values);
-
-        //mRecipes.add(r);
     }
 
-    public void deleteItem(UUID recipeID) {
-        Recipe recipe = getRecipe(recipeID);
-       // mRecipes.remove(recipe);
+    public void deleteItem(Recipe r) {
+        mDatabase.delete(RecipeTable.NAME,
+                RecipeTable.Cols.UUID + " = ?", new String[]{
+                r.getId().toString()});
     }
 
     public List<Recipe> getRecipes() {
         List<Recipe> recipe = new ArrayList<>();
-
         RecipeCursorWrapper cursor = queryRecipes(null, null);
 
         try {
@@ -70,22 +58,18 @@ public class RecipeLab {
         } finally {
             cursor.close();
         }
-
         return recipe;
     }
 
     public Recipe getRecipe(UUID id) {
-
         RecipeCursorWrapper cursor = queryRecipes(
                 RecipeTable.Cols.UUID + " = ?",
                 new String[] { id.toString() }
         );
-
         try {
             if (cursor.getCount() == 0) {
                 return null;
             }
-
             cursor.moveToFirst();
             return cursor.getRecipe();
         } finally {
@@ -96,7 +80,6 @@ public class RecipeLab {
     public void updateRecipe(Recipe recipe) {
         String uuidString = recipe.getId().toString();
         ContentValues values = getContentValues(recipe);
-
         mDatabase.update(RecipeTable.NAME, values,
                 RecipeTable.Cols.UUID + " = ?",
                 new String[] { uuidString });
@@ -112,7 +95,6 @@ public class RecipeLab {
                 null, // having
                 null  // orderBy
         );
-
         return new RecipeCursorWrapper(cursor);
     }
 
