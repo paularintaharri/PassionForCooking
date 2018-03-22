@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -58,6 +60,7 @@ public class RecipeListFragment extends Fragment {
             implements View.OnClickListener {
         private Recipe mRecipe;
         private TextView mTitleTextView;
+        private TextView mDateTextView;
         private TextView mRateTextView;
         private ImageView mLikedImageView;
 
@@ -66,6 +69,7 @@ public class RecipeListFragment extends Fragment {
             itemView.setOnClickListener(this);
 
             mTitleTextView = (TextView) itemView.findViewById(R.id.recipe_title);
+            mDateTextView = (TextView) itemView.findViewById(R.id.recipe_date);
             mRateTextView = (TextView) itemView.findViewById(R.id.recipe_rate);
             mLikedImageView = (ImageView) itemView.findViewById(R.id.recipe_liked);
 
@@ -75,6 +79,9 @@ public class RecipeListFragment extends Fragment {
             mTitleTextView.setText(mRecipe.getTitle());
             mRateTextView.setText(String.valueOf(mRecipe.getRate()));
             mLikedImageView.setVisibility(recipe.isLiked() ? View.VISIBLE : View.GONE);
+            DateFormat dateFormat = new SimpleDateFormat(RecipeFragment.DATE_FORMAT);
+            mDateTextView.setText(dateFormat.format(mRecipe.getDate()));
+
         }
 
         @Override

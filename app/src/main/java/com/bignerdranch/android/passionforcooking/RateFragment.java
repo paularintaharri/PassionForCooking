@@ -41,8 +41,6 @@ public class RateFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final float rating = getArguments().getFloat(ARG_RATE);
 
-        //vika ehkä tässä
-
         View v = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_rate, null);
         mRatingBar  = (RatingBar)v.findViewById(R.id.dialog_rate_picker);
         mRatingBar.setRating(rating);
@@ -54,15 +52,9 @@ public class RateFragment extends DialogFragment {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                //Toast.makeText(getActivity(), getString(R.string.dialog_positive_toast_message), Toast.LENGTH_SHORT).show();
                                 rate = (float) mRatingBar.getRating();
-
                                 Toast.makeText(getActivity(), String.valueOf(rate), Toast.LENGTH_SHORT).show();
-
                                 dialog.dismiss();
-                                //float grade = mRatingBar.getRating();
-                                //mRatingBar.setRating(rate);
-                                //float rate = mRatingBar.getRating();
                                 sendResult(Activity.RESULT_OK, rate);
                             }
                         })

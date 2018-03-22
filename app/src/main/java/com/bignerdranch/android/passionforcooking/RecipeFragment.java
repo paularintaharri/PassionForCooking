@@ -17,7 +17,12 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.UUID;
+
+import static android.provider.Settings.System.DATE_FORMAT;
 
 /**
  * Created by Paula on 15.3.2018.
@@ -28,7 +33,10 @@ public class RecipeFragment extends Fragment {
     private static final String ARG_RECIPE_ID = "recipe_id";
     private static final String DIALOG_RATE = "DialogRate";
     private static final int REQUEST_RATE = 0;
+    private static final String DIALOG_DATE = "DialogDate";
+    private static final int REQUEST_DATE = 1;
 
+    public static final String DATE_FORMAT = "dd.MM.yyyy";
 
 
     private Recipe mRecipe;
@@ -80,15 +88,15 @@ public class RecipeFragment extends Fragment {
         });
 
         mDateButton = (Button) v.findViewById(R.id.recipe_date);
-        mDateButton.setText(mRecipe.getDate().toString());
+        updateDate();
         mDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentManager manager = getFragmentManager();
-                RateFragment dialog = new RateFragment();
-                // RateFragment dialog = RateFragment
-               //         .newInstance(mRecipe.getDate());
-                dialog.show(manager, DIALOG_RATE);
+                DatePickerFragment dialog = DatePickerFragment
+                        .newInstance(mRecipe.getDate());
+                dialog.setTargetFragment(RecipeFragment.this, REQUEST_DATE);
+                dialog.show(manager, DIALOG_DATE);
             }
         });
 
@@ -99,7 +107,6 @@ public class RecipeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentManager manager = getFragmentManager();
-
                 RateFragment dialog = RateFragment.newInstance(mRecipe.getRate());
                 dialog.setTargetFragment(RecipeFragment.this, REQUEST_RATE);
                 dialog.show(manager, DIALOG_RATE);
@@ -132,10 +139,20 @@ public class RecipeFragment extends Fragment {
             mRecipe.setRate(rate);
             updateRate();
         }
+        if (requestCode == REQUEST_DATE) {
+            Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
+            mRecipe.setDate(date);
+            updateDate();
+        }
     }
+
+    private void updateDate() {
+        DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+        mDateButton.setText(dateFormat.format(mRecipe.getDate()));}
 
     private void updateRate() {
         mRateButton.setText(String.valueOf(mRecipe.getRate()));
+
     }
 }
 
