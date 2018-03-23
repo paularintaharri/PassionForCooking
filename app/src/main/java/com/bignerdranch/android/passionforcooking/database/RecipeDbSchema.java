@@ -14,6 +14,8 @@ public class RecipeDbSchema {
             public static final String DATE = "date";
             public static final String LIKED = "liked";
             public static final String RATE = "rate";
+            public static final String RATECOUNT = "ratecount";
+            public static final String MEANRATE = "meanrate";
 
         }
 

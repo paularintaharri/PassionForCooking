@@ -105,6 +105,10 @@ public class RecipeLab {
         values.put(RecipeTable.Cols.DATE, recipe.getDate().getTime());
         values.put(RecipeTable.Cols.LIKED, recipe.isLiked() ? 1 : 0);
         values.put(RecipeTable.Cols.RATE, recipe.getRate());
+        values.put(RecipeTable.Cols.RATECOUNT, recipe.getRateCount());
+        values.put(RecipeTable.Cols.MEANRATE, recipe.getMeanRate());
+
+
 
         return values;
     }

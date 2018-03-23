@@ -20,6 +20,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Toast;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -41,7 +43,6 @@ public class RecipeFragment extends Fragment {
     private static final int REQUEST_DATE = 1;
 
     public static final String DATE_FORMAT = "dd.MM.yyyy";
-    float currentRate;
 
     private Recipe mRecipe;
     private EditText mTitleField;
@@ -165,8 +166,27 @@ public class RecipeFragment extends Fragment {
         }
 
         if (requestCode == REQUEST_RATE) {
+            //ratebar value
             float rate = (float) data.getSerializableExtra(RateFragment.EXTRA_RATE);
-            mRecipe.setRate(rate);
+
+            // rate counts and save them to database
+            int count = mRecipe.getRateCount();
+            count = count + 1;
+            mRecipe.setRateCount(count);
+
+            //counts mean value
+            float currentrate = mRecipe.getRate();
+            currentrate = currentrate + rate;
+            mRecipe.setRate(currentrate);
+            float mean  = currentrate / count;
+            mRecipe.setMeanRate(mean);
+
+           /* Toast.makeText(getActivity(),
+                    " Äänestys kerrat: " + String.valueOf(count) +
+                    ", Kaikki yhteensä: " + String.valueOf(currentrate) +
+                    ", Keskiarvo:  " + String.valueOf(mean)
+                    ,Toast.LENGTH_SHORT).show(); */
+
             updateRate();
         }
         if (requestCode == REQUEST_DATE) {
@@ -181,8 +201,7 @@ public class RecipeFragment extends Fragment {
         mDateButton.setText(dateFormat.format(mRecipe.getDate()));}
 
     private void updateRate() {
-
-        mRateButton.setText(String.valueOf(mRecipe.getRate()));
+        mRateButton.setText(getResources().getString(R.string.rating) + " " + String.valueOf(Math.round(mRecipe.getMeanRate()) + "/5"));
 
     }
 }

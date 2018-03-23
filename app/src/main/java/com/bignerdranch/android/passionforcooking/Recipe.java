@@ -16,6 +16,8 @@ public class Recipe {
     private Date mDate;
     private boolean mLiked;
     private float mRate;
+    private float mMeanRate;
+    private int mRateCount;
 
 
     public Recipe() {
@@ -61,5 +63,19 @@ public class Recipe {
 
     public void setLiked(boolean liked) {
         mLiked = liked;
+    }
+
+    public int getRateCount() {
+        return mRateCount;
+    }
+
+    public void setRateCount(int rateCount) {
+        mRateCount = rateCount;
+    }
+
+    public float getMeanRate() {return mMeanRate;}
+
+    public void setMeanRate(float meanRate) {
+        mMeanRate = meanRate;
     }
 }

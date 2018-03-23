@@ -31,8 +31,6 @@ public class RecipeListFragment extends Fragment {
     private boolean mSubtitleVisible;
     private static final String SAVED_SUBTITLE_VISIBLE = "subtitle";
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -155,7 +153,7 @@ public class RecipeListFragment extends Fragment {
         public void bind(Recipe recipe) {
             mRecipe = recipe;
             mTitleTextView.setText(mRecipe.getTitle());
-            mRateTextView.setText(String.valueOf(mRecipe.getRate()));
+            mRateTextView.setText(getResources().getString(R.string.rating) + " " + String.valueOf(Math.round(mRecipe.getMeanRate()) + "/5"));
             mLikedImageView.setVisibility(recipe.isLiked() ? View.VISIBLE : View.GONE);
             DateFormat dateFormat = new SimpleDateFormat(RecipeFragment.DATE_FORMAT);
             mDateTextView.setText(dateFormat.format(mRecipe.getDate()));

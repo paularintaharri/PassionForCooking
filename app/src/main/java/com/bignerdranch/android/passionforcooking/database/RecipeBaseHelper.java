@@ -28,7 +28,10 @@ public class RecipeBaseHelper extends SQLiteOpenHelper {
                 RecipeTable.Cols.TITLE + ", " +
                 RecipeTable.Cols.DATE + ", " +
                 RecipeTable.Cols.LIKED + ", " +
-                RecipeTable.Cols.RATE +
+                RecipeTable.Cols.RATE + ", " +
+                RecipeTable.Cols.RATECOUNT + ", " +
+                RecipeTable.Cols.MEANRATE +
+
                 ")"
         );
 

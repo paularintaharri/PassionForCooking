@@ -23,9 +23,8 @@ public class RateFragment extends DialogFragment {
            "com.bignerdranch.android.passionforcooking.rate";
 
     private static final String ARG_RATE = "rate";
-
     private RatingBar mRatingBar;
-    float rate = 0;
+    float rate;
 
     public static RateFragment newInstance(float rate){
         Bundle args = new Bundle();
@@ -52,7 +51,8 @@ public class RateFragment extends DialogFragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 rate = (float) mRatingBar.getRating();
-                                Toast.makeText(getActivity(), String.valueOf(rate), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), getResources().getString(R.string.star_toast_start) + " "
+                                          + String.valueOf(Math.round(rate)) + " " + getResources().getString(R.string.star_toast_end) , Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
                                 sendResult(Activity.RESULT_OK, rate);
                             }

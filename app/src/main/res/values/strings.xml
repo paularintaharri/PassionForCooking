@@ -18,6 +18,13 @@
         <item quantity="one">%1$d recipe</item>
         <item quantity="other">%1$d recipes</item>
     </plurals>
+    <string name="star_toast_start">You gave </string>
+    <string name="star_toast_end"> stars! </string>
+    <string name="rating">Average rating: </string>
+
+
+
+
 
 
 
