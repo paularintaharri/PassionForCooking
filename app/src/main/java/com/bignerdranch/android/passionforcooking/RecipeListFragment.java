@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -90,9 +89,9 @@ public class RecipeListFragment extends Fragment {
             case R.id.new_recipe:
                 Recipe recipe = new Recipe();
                 RecipeLab.get(getActivity()).addRecipe(recipe);
-                Intent intent = RecipePagerActivity
+                Intent intentAdd = RecipePagerActivity
                         .newIntent(getActivity(), recipe.getId());
-                startActivity(intent);
+                startActivity(intentAdd);
                 return true;
             case R.id.show_subtitle:
                 mSubtitleVisible = !mSubtitleVisible;
@@ -155,7 +154,7 @@ public class RecipeListFragment extends Fragment {
             mTitleTextView.setText(mRecipe.getTitle());
             mRateTextView.setText(getResources().getString(R.string.rating) + " " + String.valueOf(Math.round(mRecipe.getMeanRate()) + "/5"));
             mLikedImageView.setVisibility(recipe.isLiked() ? View.VISIBLE : View.GONE);
-            DateFormat dateFormat = new SimpleDateFormat(RecipeFragment.DATE_FORMAT);
+            DateFormat dateFormat = new SimpleDateFormat(RecipeFragmentAdd.DATE_FORMAT);
             mDateTextView.setText(dateFormat.format(mRecipe.getDate()));
 
         }

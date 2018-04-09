@@ -51,7 +51,7 @@ public class RecipePagerActivity extends AppCompatActivity {
                 @Override
                 public Fragment getItem(int position) {
                     Recipe recipe = mRecipes.get(position);
-                    return RecipeFragment.newInstance(recipe.getId());
+                        return RecipeFragmentAdd.newInstance(recipe.getId());
                 }
 
                 @Override

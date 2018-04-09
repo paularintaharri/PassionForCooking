@@ -3,9 +3,7 @@ package com.bignerdranch.android.passionforcooking;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.provider.Telephony;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.text.Editable;
@@ -20,21 +18,20 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
-import static android.content.Context.MODE_PRIVATE;
-import static android.provider.Settings.System.DATE_FORMAT;
-
 /**
  * Created by Paula on 15.3.2018.
  */
 
-public class RecipeFragment extends Fragment {
+//NOT USED YET
+
+public class RecipeFragmentShow extends Fragment {
 
     private static final String ARG_RECIPE_ID = "recipe_id";
     private static final String DIALOG_RATE = "DialogRate";
@@ -45,16 +42,16 @@ public class RecipeFragment extends Fragment {
     public static final String DATE_FORMAT = "dd.MM.yyyy";
 
     private Recipe mRecipe;
-    private EditText mTitleField;
+    private TextView mTitleField;
     private Button mDateButton;
     private Button mRateButton; //Rate recipe
     private CheckBox mLikedCheckBox;
 
-    public static RecipeFragment newInstance(UUID recipeId) {
+    public static RecipeFragmentShow newInstance(UUID recipeId) {
         Bundle args = new Bundle();
         args.putSerializable(ARG_RECIPE_ID, recipeId);
 
-        RecipeFragment fragment = new RecipeFragment();
+        RecipeFragmentShow fragment = new RecipeFragmentShow();
         fragment.setArguments(args);
         return fragment;
     }
@@ -96,9 +93,9 @@ public class RecipeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_recipe, container, false);
+        View v = inflater.inflate(R.layout.fragment_recipe_show, container, false);
 
-        mTitleField = (EditText) v.findViewById(R.id.recipe_title);
+        mTitleField = (TextView) v.findViewById(R.id.recipe_title);
         mTitleField.setText(mRecipe.getTitle());
         mTitleField.addTextChangedListener(new TextWatcher() {
             @Override
@@ -127,7 +124,7 @@ public class RecipeFragment extends Fragment {
                 FragmentManager manager = getFragmentManager();
                 DatePickerFragment dialog = DatePickerFragment
                         .newInstance(mRecipe.getDate());
-                dialog.setTargetFragment(RecipeFragment.this, REQUEST_DATE);
+                dialog.setTargetFragment(RecipeFragmentShow.this, REQUEST_DATE);
                 dialog.show(manager, DIALOG_DATE);
             }
         });
@@ -140,7 +137,7 @@ public class RecipeFragment extends Fragment {
             public void onClick(View v) {
                 FragmentManager manager = getFragmentManager();
                 RateFragment dialog = RateFragment.newInstance(mRecipe.getRate());
-                dialog.setTargetFragment(RecipeFragment.this, REQUEST_RATE);
+                dialog.setTargetFragment(RecipeFragmentShow.this, REQUEST_RATE);
                 dialog.show(manager, DIALOG_RATE);
             }
         });
