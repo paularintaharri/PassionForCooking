@@ -21,6 +21,11 @@
     <string name="star_toast_start">You gave </string>
     <string name="star_toast_end"> stars! </string>
     <string name="rating">Average rating: </string>
+    <string name="recipe_send">Send recipe</string>
+    <string name="send_recipe">%1$s. %2$s. </string>
+    <string name="recipe_subject">PassionForCooking Recipe</string>
+    <string name="send_resipe_via">Send recipe via</string>
+
 
 
 

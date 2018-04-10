@@ -20,6 +20,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import java.text.DateFormat;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
@@ -43,6 +44,7 @@ public class RecipeFragmentAdd extends Fragment {
     private Button mDateButton;
     private Button mRateButton; //Rate recipe
     private CheckBox mLikedCheckBox;
+    private Button mSendButton;
 
     public static RecipeFragmentAdd newInstance(UUID recipeId) {
         Bundle args = new Bundle();
@@ -149,6 +151,19 @@ public class RecipeFragmentAdd extends Fragment {
             }
         });
 
+        mSendButton = (Button) v.findViewById(R.id.recipe_send);
+        mSendButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("text/plain");
+                i.putExtra(Intent.EXTRA_TEXT, getRecipeSend());
+                i.putExtra(Intent.EXTRA_SUBJECT,
+                        getString(R.string.recipe_subject));
+                i = Intent.createChooser(i, getString(R.string.send_resipe_via));
+                startActivity(i);
+            }
+        });
+
         return v;
     }
 
@@ -174,13 +189,6 @@ public class RecipeFragmentAdd extends Fragment {
             mRecipe.setRate(currentrate);
             float mean  = currentrate / count;
             mRecipe.setMeanRate(mean);
-
-           /* Toast.makeText(getActivity(),
-                    " Äänestys kerrat: " + String.valueOf(count) +
-                    ", Kaikki yhteensä: " + String.valueOf(currentrate) +
-                    ", Keskiarvo:  " + String.valueOf(mean)
-                    ,Toast.LENGTH_SHORT).show(); */
-
             updateRate();
         }
         if (requestCode == REQUEST_DATE) {
@@ -196,7 +204,12 @@ public class RecipeFragmentAdd extends Fragment {
 
     private void updateRate() {
         mRateButton.setText(getResources().getString(R.string.rating) + " " + String.valueOf(Math.round(mRecipe.getMeanRate()) + "/5"));
+    }
 
+    private String getRecipeSend() {
+        String report = getString(R.string.send_recipe,
+                mRecipe.getTitle(), mRecipe.getTitle());
+        return report;
     }
 }
 

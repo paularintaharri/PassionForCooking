@@ -82,7 +82,6 @@ public class RecipeListFragment extends Fragment {
             subtitleItem.setTitle(R.string.show_subtitle);
         }
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

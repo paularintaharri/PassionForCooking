@@ -101,18 +101,14 @@ public class RecipeFragmentShow extends Fragment {
             @Override
             public void beforeTextChanged(
                     CharSequence s, int start, int count, int after) {
-                // This space intentionally left blank
             }
-
             @Override
             public void onTextChanged(
                     CharSequence s, int start, int before, int count) {
                 mRecipe.setTitle(s.toString());
             }
-
             @Override
             public void afterTextChanged(Editable s) {
-                // This one too
             }
         });
 
@@ -161,7 +157,6 @@ public class RecipeFragmentShow extends Fragment {
         if (resultCode != Activity.RESULT_OK) {
             return;
         }
-
         if (requestCode == REQUEST_RATE) {
             //ratebar value
             float rate = (float) data.getSerializableExtra(RateFragment.EXTRA_RATE);
@@ -177,12 +172,6 @@ public class RecipeFragmentShow extends Fragment {
             mRecipe.setRate(currentrate);
             float mean  = currentrate / count;
             mRecipe.setMeanRate(mean);
-
-           /* Toast.makeText(getActivity(),
-                    " Äänestys kerrat: " + String.valueOf(count) +
-                    ", Kaikki yhteensä: " + String.valueOf(currentrate) +
-                    ", Keskiarvo:  " + String.valueOf(mean)
-                    ,Toast.LENGTH_SHORT).show(); */
 
             updateRate();
         }

@@ -52,7 +52,9 @@ public class RateFragment extends DialogFragment {
                             public void onClick(DialogInterface dialog, int which) {
                                 rate = (float) mRatingBar.getRating();
                                 Toast.makeText(getActivity(), getResources().getString(R.string.star_toast_start) + " "
-                                          + String.valueOf(Math.round(rate)) + " " + getResources().getString(R.string.star_toast_end) , Toast.LENGTH_SHORT).show();
+                                          + String.valueOf(Math.round(rate)) + " "
+                                        + getResources().getString(R.string.star_toast_end) ,
+                                        Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
                                 sendResult(Activity.RESULT_OK, rate);
                             }
