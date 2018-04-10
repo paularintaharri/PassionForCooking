@@ -221,8 +221,8 @@ public class RecipeFragmentAdd extends Fragment {
     }
 
     private String getRecipeSend() {
-        String report = getString(R.string.send_recipe,
-                mRecipe.getTitle(), mRecipe.getTitle());
+        String report = getString(R.string.send_recipe, mRecipe.getTitle(),
+                mRecipe.getIngredients(), mRecipe.getDetails());
         return report;
     }
 
