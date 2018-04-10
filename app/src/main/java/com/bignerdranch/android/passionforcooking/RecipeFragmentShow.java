@@ -46,6 +46,8 @@ public class RecipeFragmentShow extends Fragment {
     private Button mDateButton;
     private Button mRateButton; //Rate recipe
     private CheckBox mLikedCheckBox;
+    private EditText mIngredients;
+    private EditText mDetails;
 
     public static RecipeFragmentShow newInstance(UUID recipeId) {
         Bundle args = new Bundle();
@@ -109,6 +111,48 @@ public class RecipeFragmentShow extends Fragment {
             }
             @Override
             public void afterTextChanged(Editable s) {
+            }
+        });
+
+        mIngredients = (EditText) v.findViewById(R.id.ingredients);
+        mIngredients.setText(mRecipe.getIngredients());
+        mIngredients.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(
+                    CharSequence s, int start, int count, int after) {
+                // This space intentionally left blank
+            }
+
+            @Override
+            public void onTextChanged(
+                    CharSequence s, int start, int before, int count) {
+                mRecipe.setIngredients(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // This one too
+            }
+        });
+
+        mDetails= (EditText) v.findViewById(R.id.details);
+        mDetails.setText(mRecipe.getDetails());
+        mDetails.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(
+                    CharSequence s, int start, int count, int after) {
+                // This space intentionally left blank
+            }
+
+            @Override
+            public void onTextChanged(
+                    CharSequence s, int start, int before, int count) {
+                mRecipe.setDetails(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // This one too
             }
         });
 

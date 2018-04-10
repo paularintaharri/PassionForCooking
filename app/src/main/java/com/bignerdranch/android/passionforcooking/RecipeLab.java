@@ -107,8 +107,8 @@ public class RecipeLab {
         values.put(RecipeTable.Cols.RATE, recipe.getRate());
         values.put(RecipeTable.Cols.RATECOUNT, recipe.getRateCount());
         values.put(RecipeTable.Cols.MEANRATE, recipe.getMeanRate());
-
-
+        values.put(RecipeTable.Cols.INGREDIENTS, recipe.getIngredients());
+        values.put(RecipeTable.Cols.DETAILS, recipe.getDetails());
 
         return values;
     }

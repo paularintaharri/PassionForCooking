@@ -18,6 +18,8 @@ public class Recipe {
     private float mRate;
     private float mMeanRate;
     private int mRateCount;
+    private String mIngredients;
+    private String mDetails;
 
 
     public Recipe() {
@@ -77,5 +79,21 @@ public class Recipe {
 
     public void setMeanRate(float meanRate) {
         mMeanRate = meanRate;
+    }
+
+    public String getIngredients() {
+        return mIngredients;
+    }
+
+    public void setIngredients(String ingredients) {
+        mIngredients = ingredients;
+    }
+
+    public String getDetails() {
+        return mDetails;
+    }
+
+    public void setDetails(String details) {
+        mDetails = details;
     }
 }

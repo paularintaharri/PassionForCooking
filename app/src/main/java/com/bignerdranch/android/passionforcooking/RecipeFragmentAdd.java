@@ -45,6 +45,8 @@ public class RecipeFragmentAdd extends Fragment {
     private Button mRateButton; //Rate recipe
     private CheckBox mLikedCheckBox;
     private Button mSendButton;
+    private EditText mIngredients;
+    private EditText mDetails;
 
     public static RecipeFragmentAdd newInstance(UUID recipeId) {
         Bundle args = new Bundle();
@@ -96,24 +98,15 @@ public class RecipeFragmentAdd extends Fragment {
 
         mTitleField = (EditText) v.findViewById(R.id.recipe_title);
         mTitleField.setText(mRecipe.getTitle());
-        mTitleField.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(
-                    CharSequence s, int start, int count, int after) {
-                // This space intentionally left blank
-            }
+        mTitleField.addTextChangedListener(textWatcher);
 
-            @Override
-            public void onTextChanged(
-                    CharSequence s, int start, int before, int count) {
-                mRecipe.setTitle(s.toString());
-            }
+        mDetails = (EditText) v.findViewById(R.id.details_edit);
+        mDetails.setText(mRecipe.getDetails());
+        mDetails.addTextChangedListener(textWatcher);
 
-            @Override
-            public void afterTextChanged(Editable s) {
-                // This one too
-            }
-        });
+        mIngredients = (EditText) v.findViewById(R.id.ingredients_edit);
+        mIngredients.setText(mRecipe.getIngredients());
+        mIngredients.addTextChangedListener(textWatcher);
 
         mDateButton = (Button) v.findViewById(R.id.recipe_date);
         updateDate();
@@ -167,6 +160,27 @@ public class RecipeFragmentAdd extends Fragment {
         return v;
     }
 
+    TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if (mTitleField.hasFocus()) {
+                mRecipe.setTitle(s.toString());
+            } else if (mIngredients.hasFocus()) {
+                mRecipe.setIngredients(s.toString());
+            }else {
+                mRecipe.setDetails(s.toString());
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -211,5 +225,6 @@ public class RecipeFragmentAdd extends Fragment {
                 mRecipe.getTitle(), mRecipe.getTitle());
         return report;
     }
+
 }
 

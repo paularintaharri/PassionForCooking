@@ -27,6 +27,9 @@ public class RecipeCursorWrapper extends CursorWrapper {
         int ratecount = getInt(getColumnIndex(RecipeTable.Cols.RATECOUNT));
         float meanrate = getFloat(getColumnIndex(RecipeTable.Cols.MEANRATE));
         int isLiked = getInt(getColumnIndex(RecipeTable.Cols.LIKED));
+        String ingredients = getString(getColumnIndex(RecipeTable.Cols.INGREDIENTS));
+        String details = getString(getColumnIndex(RecipeTable.Cols.DETAILS));
+
 
         Recipe recipe = new Recipe(UUID.fromString(uuidString));
         recipe.setTitle(title);
@@ -35,6 +38,9 @@ public class RecipeCursorWrapper extends CursorWrapper {
         recipe.setRateCount(ratecount);
         recipe.setMeanRate(meanrate);
         recipe.setLiked(isLiked != 0);
+        recipe.setIngredients(ingredients);
+        recipe.setDetails(details);
+
 
         return recipe;
 
