@@ -96,4 +96,8 @@ public class Recipe {
     public void setDetails(String details) {
         mDetails = details;
     }
+
+    public String getPhotoFilename() {
+        return "IMG_" + getId().toString() + ".jpg";
+    }
 }

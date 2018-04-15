@@ -117,7 +117,6 @@
         android:layout_marginTop="8dp"
         android:text="@string/recipe_send"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recipe_liked" />
 

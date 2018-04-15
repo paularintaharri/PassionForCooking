@@ -3,9 +3,15 @@ package com.bignerdranch.android.passionforcooking;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.FileProvider;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -14,15 +20,20 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
+import java.io.File;
 import java.text.DateFormat;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -33,13 +44,16 @@ public class RecipeFragmentAdd extends Fragment {
 
     private static final String ARG_RECIPE_ID = "recipe_id";
     private static final String DIALOG_RATE = "DialogRate";
+    private static final String DIALOG_PHOTO = "DialogPhoto";
     private static final int REQUEST_RATE = 0;
     private static final String DIALOG_DATE = "DialogDate";
     private static final int REQUEST_DATE = 1;
+    private static final int REQUEST_PHOTO= 2;
 
     public static final String DATE_FORMAT = "dd.MM.yyyy";
 
     private Recipe mRecipe;
+    private File mPhotoFile;
     private EditText mTitleField;
     private Button mDateButton;
     private Button mRateButton; //Rate recipe
@@ -47,6 +61,10 @@ public class RecipeFragmentAdd extends Fragment {
     private Button mSendButton;
     private EditText mIngredients;
     private EditText mDetails;
+    private ImageButton mPhotoButton;
+    private ImageView mPhotoView;
+    private int mPhotoWidth;
+    private int mPhotoHeight;
 
     public static RecipeFragmentAdd newInstance(UUID recipeId) {
         Bundle args = new Bundle();
@@ -63,6 +81,7 @@ public class RecipeFragmentAdd extends Fragment {
         setHasOptionsMenu(true);
         UUID recipeId = (UUID) getArguments().getSerializable(ARG_RECIPE_ID);
         mRecipe = RecipeLab.get(getActivity()).getRecipe(recipeId);
+        mPhotoFile = RecipeLab.get(getActivity()).getPhotoFile(mRecipe);
     }
 
     @Override
@@ -72,7 +91,6 @@ public class RecipeFragmentAdd extends Fragment {
         RecipeLab.get(getActivity())
                 .updateRecipe(mRecipe);
     }
-
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -157,6 +175,58 @@ public class RecipeFragmentAdd extends Fragment {
             }
         });
 
+        PackageManager packageManager = getActivity().getPackageManager();
+
+        mPhotoButton = (ImageButton) v.findViewById(R.id.recipe_camera);
+        final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        boolean canTakePhoto = mPhotoFile != null &&
+                captureImage.resolveActivity(packageManager) != null;
+        mPhotoButton.setEnabled(canTakePhoto);
+
+        mPhotoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = FileProvider.getUriForFile(getActivity(),
+                        "com.bignerdranch.android.passionforcooking.fileprovider",
+                        mPhotoFile);
+                captureImage.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+
+                List<ResolveInfo> cameraActivities = getActivity()
+                        .getPackageManager().queryIntentActivities(captureImage,
+                                PackageManager.MATCH_DEFAULT_ONLY);
+
+                for (ResolveInfo activity : cameraActivities) {
+                    getActivity().grantUriPermission(activity.activityInfo.packageName,
+                            uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                }
+
+                startActivityForResult(captureImage, REQUEST_PHOTO);
+            }
+        });
+
+        mPhotoView = (ImageView) v.findViewById(R.id.recipe_photo);
+        mPhotoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager manager = getFragmentManager();
+                PhotoDialogFragment dialog = PhotoDialogFragment.newInstance(mPhotoFile);
+                dialog.show(manager, DIALOG_PHOTO);
+            }
+        });
+        ViewTreeObserver observer = mPhotoView.getViewTreeObserver();
+        if (observer.isAlive()) {
+            observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    mPhotoView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    mPhotoWidth = mPhotoView.getMeasuredWidth();
+                    mPhotoHeight = mPhotoView.getMeasuredHeight();
+                    updatePhotoView();
+                }
+            });
+        }
+
         return v;
     }
 
@@ -204,11 +274,19 @@ public class RecipeFragmentAdd extends Fragment {
             float mean  = currentrate / count;
             mRecipe.setMeanRate(mean);
             updateRate();
-        }
-        if (requestCode == REQUEST_DATE) {
+        }else if (requestCode == REQUEST_DATE) {
             Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
             mRecipe.setDate(date);
             updateDate();
+        } else if (requestCode == REQUEST_PHOTO) {
+        Uri uri = FileProvider.getUriForFile(getActivity(),
+                "com.bignerdranch.android.passionforcooking.fileprovider",
+                mPhotoFile);
+
+        getActivity().revokeUriPermission(uri,
+                Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
+        updatePhotoView();
         }
     }
 
@@ -224,6 +302,16 @@ public class RecipeFragmentAdd extends Fragment {
         String report = getString(R.string.send_recipe, mRecipe.getTitle(),
                 mRecipe.getIngredients(), mRecipe.getDetails());
         return report;
+    }
+
+    private void updatePhotoView() {
+        if (mPhotoFile == null || !mPhotoFile.exists()) {
+            mPhotoView.setImageDrawable(null);
+        } else {
+            Bitmap bitmap = PictureUtils.getScaledBitmap(
+                    mPhotoFile.getPath(), mPhotoWidth, mPhotoHeight);
+            mPhotoView.setImageBitmap(bitmap);
+        }
     }
 
 }

@@ -8,6 +8,7 @@ import com.bignerdranch.android.passionforcooking.database.RecipeBaseHelper;
 import com.bignerdranch.android.passionforcooking.database.RecipeCursorWrapper;
 import com.bignerdranch.android.passionforcooking.database.RecipeDbSchema.RecipeTable;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -75,6 +76,11 @@ public class RecipeLab {
         } finally {
             cursor.close();
         }
+    }
+
+    public File getPhotoFile(Recipe recipe) {
+        File filesDir = mContext.getFilesDir();
+        return new File(filesDir, recipe.getPhotoFilename());
     }
 
     public void updateRecipe(Recipe recipe) {
