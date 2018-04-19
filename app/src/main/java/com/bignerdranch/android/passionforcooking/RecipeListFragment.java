@@ -1,5 +1,6 @@
 package com.bignerdranch.android.passionforcooking;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import javax.security.auth.callback.Callback;
+
 /**
  * Created by Paula on 15.3.2018.
  */
@@ -28,7 +31,19 @@ public class RecipeListFragment extends Fragment {
     private RecipeAdapter mAdapter;
     private TextView mTextView;
     private boolean mSubtitleVisible;
+    private Callbacks mCallbacks;
     private static final String SAVED_SUBTITLE_VISIBLE = "subtitle";
+
+
+    public interface Callbacks {
+        void onRecipeSelected(Recipe recipe);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mCallbacks = (Callbacks) context;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,6 +86,12 @@ public class RecipeListFragment extends Fragment {
     }
 
     @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = null;
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.fragment_recipe_list, menu);
@@ -88,9 +109,8 @@ public class RecipeListFragment extends Fragment {
             case R.id.new_recipe:
                 Recipe recipe = new Recipe();
                 RecipeLab.get(getActivity()).addRecipe(recipe);
-                Intent intentAdd = RecipePagerActivity
-                        .newIntent(getActivity(), recipe.getId());
-                startActivity(intentAdd);
+                updateUI();
+                mCallbacks.onRecipeSelected(recipe);
                 return true;
             case R.id.show_subtitle:
                 mSubtitleVisible = !mSubtitleVisible;
@@ -115,7 +135,7 @@ public class RecipeListFragment extends Fragment {
         activity.getSupportActionBar().setSubtitle(subtitle);
     }
 
-    private void updateUI() {
+    public void updateUI() {
         RecipeLab recipeLab = RecipeLab.get(getActivity());
         List<Recipe> recipes = recipeLab.getRecipes();
 
@@ -160,8 +180,7 @@ public class RecipeListFragment extends Fragment {
 
         @Override
         public void onClick(View view) {
-            Intent intent = RecipePagerActivity.newIntent(getActivity(), mRecipe.getId());
-            startActivity(intent);
+           mCallbacks.onRecipeSelected((mRecipe));
         }
     }
 

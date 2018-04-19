@@ -2,6 +2,7 @@ package com.bignerdranch.android.passionforcooking;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -63,8 +64,13 @@ public class RecipeFragmentAdd extends Fragment {
     private EditText mDetails;
     private ImageButton mPhotoButton;
     private ImageView mPhotoView;
+    private Callbacks mCallbacks;
     private int mPhotoWidth;
     private int mPhotoHeight;
+
+    public interface Callbacks {
+        void onRecipeUpdated(Recipe recipe);
+    }
 
     public static RecipeFragmentAdd newInstance(UUID recipeId) {
         Bundle args = new Bundle();
@@ -73,6 +79,12 @@ public class RecipeFragmentAdd extends Fragment {
         RecipeFragmentAdd fragment = new RecipeFragmentAdd();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mCallbacks = (Callbacks) context;
     }
 
     @Override
@@ -90,6 +102,12 @@ public class RecipeFragmentAdd extends Fragment {
 
         RecipeLab.get(getActivity())
                 .updateRecipe(mRecipe);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = null;
     }
 
     @Override
@@ -159,6 +177,7 @@ public class RecipeFragmentAdd extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView,
                                          boolean isChecked) {
                 mRecipe.setLiked(isChecked);
+                updateRecipe();
             }
         });
 
@@ -239,10 +258,13 @@ public class RecipeFragmentAdd extends Fragment {
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             if (mTitleField.hasFocus()) {
                 mRecipe.setTitle(s.toString());
+                updateRecipe();
             } else if (mIngredients.hasFocus()) {
                 mRecipe.setIngredients(s.toString());
+                updateRecipe();
             }else {
                 mRecipe.setDetails(s.toString());
+                updateRecipe();
             }
         }
 
@@ -273,10 +295,12 @@ public class RecipeFragmentAdd extends Fragment {
             mRecipe.setRate(currentrate);
             float mean  = currentrate / count;
             mRecipe.setMeanRate(mean);
+            updateRecipe();
             updateRate();
         }else if (requestCode == REQUEST_DATE) {
             Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
             mRecipe.setDate(date);
+            updateRecipe();
             updateDate();
         } else if (requestCode == REQUEST_PHOTO) {
         Uri uri = FileProvider.getUriForFile(getActivity(),
@@ -285,9 +309,14 @@ public class RecipeFragmentAdd extends Fragment {
 
         getActivity().revokeUriPermission(uri,
                 Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-
+        updateRecipe();
         updatePhotoView();
         }
+    }
+
+    private void updateRecipe() {
+        RecipeLab.get(getActivity()).updateRecipe(mRecipe);
+        mCallbacks.onRecipeUpdated(mRecipe);
     }
 
     private void updateDate() {

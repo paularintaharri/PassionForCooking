@@ -18,7 +18,8 @@ import java.util.UUID;
  * Created by Paula on 16.3.2018.
  */
 
-public class RecipePagerActivity extends AppCompatActivity {
+public class RecipePagerActivity extends AppCompatActivity
+        implements RecipeFragmentAdd.Callbacks {
 
     private static final String EXTRA_RECIPE_ID =
             "com.bignerdranch.android.passionforcooking.recipe_id";
@@ -115,4 +116,8 @@ public class RecipePagerActivity extends AppCompatActivity {
 
 
         }
+    @Override
+    public void onRecipeUpdated(Recipe recipe) {
+
+    }
 }
