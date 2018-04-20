@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">PassionForCooking</string>
+    <string name="recipe_title_hint">Enter a title for the recipe.</string>
+    <string name="recipe_title_label">Title</string>
+    <string name="recipe_details_label">Details</string>
+    <string name="recipe_liked_label">Liked</string>
+    <string name="recipe_next_button">Next</string>
+    <string name="recipe_prev_button">Prev</string>
+    <string name="rate_recipe_title">Rate recipe: </string>
+    <string name="date_picker_title">Date:</string>
+    <string name="new_recipe">New Recipe</string>
+    <string name="delete_recipe">Delete Recipe</string>
+    <string name="show_subtitle">Show Subtitle</string>
+    <string name="hide_subtitle">Hide Subtitle</string>
+    <string name="subtitle_format">%1$d recipes</string>
+    <string name="no_recipes_add">No recipes</string>
+    <plurals name="subtitle_plural">
+        <item quantity="one">%1$d recipe</item>
+        <item quantity="other">%1$d recipes</item>
+    </plurals>
+    <string name="star_toast_start">You gave </string>
+    <string name="star_toast_end"> stars! </string>
+    <string name="rating">Average rating: </string>
+    <string name="recipe_send">Send recipe</string>
+    <string name="send_recipe">Name: %1$s.\nIngredients:\n%2$s.\nDetails:\n%3$s. </string>
+    <string name="recipe_subject">PassionForCooking Recipe</string>
+    <string name="send_resipe_via">Send recipe via</string>
+    <string name="ingredients">Ingredients:</string>
+    <string name="details">Recipe:</string>
+    <string name="recipe_ingredients_hint">Enter needed ingredients here.</string>
+    <string name="recipe_details_hint">Enter recipe details here.</string>
+
+
+
+
+
+
+
+
+
+
+
+</resources>

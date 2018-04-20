@@ -19,7 +19,7 @@ public class RecipeListActivity extends SingleFragmentActivity
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.activity_twopane; //activity_twopane = tablet, activity_masterdetail = phone
+        return R.layout.activity_masterdetail; //activity_twopane = tablet, activity_masterdetail = phone
     }
 
     @Override

@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">PassionForCooking</string>
+    <string name="recipe_title_hint">Lisää reseptin nimi</string>
+    <string name="recipe_title_label">Nimi</string>
+    <string name="recipe_details_label">Tiedot</string>
+    <string name="recipe_liked_label">Tykätty</string>
+    <string name="recipe_next_button">Seuraava</string>
+    <string name="recipe_prev_button">Edellinen</string>
+    <string name="rate_recipe_title">Arvosana: </string>
+    <string name="date_picker_title">Päivä:</string>
+    <string name="new_recipe">Uusi resepti</string>
+    <string name="delete_recipe">Poista resepti</string>
+    <string name="show_subtitle">Näytä tekstit</string>
+    <string name="hide_subtitle">Piilota tekstit</string>
+    <string name="subtitle_format">%1$d reseptiä</string>
+    <string name="no_recipes_add">Ei reseptejä</string>
+    <plurals name="subtitle_plural">
+        <item quantity="one">%1$d resepti</item>
+        <item quantity="other">%1$d reseptiä</item>
+    </plurals>
+    <string name="star_toast_start">Sinä annoit </string>
+    <string name="star_toast_end"> tähteä! </string>
+    <string name="rating">Keskiarvo: </string>
+    <string name="recipe_send">Lähetä resepti</string>
+    <string name="send_recipe">Nimi: %1$s.\nAinekset:\n%2$s.\nOhjeet:\n%3$s. </string>
+    <string name="recipe_subject">PassionForCooking Reseptit</string>
+    <string name="send_resipe_via">Lähetä resepti</string>
+    <string name="ingredients">Ainekset:</string>
+    <string name="details">Resepti:</string>
+    <string name="recipe_ingredients_hint">Kirjoita tarvittavat ainekset tähän.</string>
+    <string name="recipe_details_hint">Kirjoita reseptin ohjeet tähän.</string>
+
+</resources>

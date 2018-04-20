@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+<!--
+            <item name="activity_masterdetail" type="layout">@layout/activity_twopane</item>
+-->
 
-      <item name="activity_masterdetail" type="layout">@layout/activity_twopane</item>
-
-
-      <!--delete comments that works only in teblet-->
+            <!--delete comments that works only in teblet-->
 
 </resources>
