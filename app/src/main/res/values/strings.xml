@@ -30,6 +30,8 @@
     <string name="recipe_ingredients_hint">Enter needed ingredients here.</string>
     <string name="recipe_details_hint">Enter recipe details here.</string>
     <string name="web_view">Webview</string>
+    <string name="map">Map</string>
+
 
 
 

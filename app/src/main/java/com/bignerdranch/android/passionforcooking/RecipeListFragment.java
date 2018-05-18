@@ -116,8 +116,11 @@ public class RecipeListFragment extends Fragment {
                 getActivity().invalidateOptionsMenu();
                 updateSubtitle();
                 return true;
-            case R.id.navigation_menu:
+            case R.id.show_webview:
                 showWebView();
+                return true;
+            case R.id.show_map:
+                //showMapView();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

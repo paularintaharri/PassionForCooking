@@ -15,9 +15,15 @@
         app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/navigation_menu"
-        android:icon="@drawable/ic_menu_navigate"
+        android:id="@+id/show_webview"
+        android:icon="@drawable/ic_menu_web"
         android:title="@string/web_view"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/show_map"
+        android:icon="@drawable/ic_menu_map"
+        android:title="@string/map"
         app:showAsAction="ifRoom" />
 
 
