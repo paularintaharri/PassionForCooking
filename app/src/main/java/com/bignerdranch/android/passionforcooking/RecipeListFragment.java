@@ -51,7 +51,6 @@ public class RecipeListFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -117,9 +116,17 @@ public class RecipeListFragment extends Fragment {
                 getActivity().invalidateOptionsMenu();
                 updateSubtitle();
                 return true;
+            case R.id.navigation_menu:
+                showWebView();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void showWebView() {
+        Intent intent = new Intent(getContext(), WebViewActivity.class);
+        startActivity(intent);
     }
 
     private void updateSubtitle() {

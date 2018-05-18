@@ -29,5 +29,10 @@
     <string name="details">Resepti:</string>
     <string name="recipe_ingredients_hint">Kirjoita tarvittavat ainekset tähän.</string>
     <string name="recipe_details_hint">Kirjoita reseptin ohjeet tähän.</string>
+    <string name="web_view">Web näkymä</string>
+
+
+
+
 
 </resources>
