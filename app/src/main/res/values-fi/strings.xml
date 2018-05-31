@@ -31,6 +31,12 @@
     <string name="recipe_details_hint">Kirjoita reseptin ohjeet tähän.</string>
     <string name="web_view">Web näkymä</string>
     <string name="map">Kartta</string>
+    <string name="search">Löydä kauppa</string>
+    <string name="current_location">Nykyinen sijainti</string>
+    <string name="premission_den">Lupa hylätty</string>
+    <string name="near_store">Lähimmät supermarketit</string>
+
+
 
 
 

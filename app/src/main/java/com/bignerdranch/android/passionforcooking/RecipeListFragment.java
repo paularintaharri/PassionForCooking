@@ -20,8 +20,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import javax.security.auth.callback.Callback;
-
 /**
  * Created by Paula on 15.3.2018.
  */
@@ -120,11 +118,16 @@ public class RecipeListFragment extends Fragment {
                 showWebView();
                 return true;
             case R.id.show_map:
-                //showMapView();
+                showMapView();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void showMapView() {
+        Intent intent = new Intent(getContext(), LocationActivity.class);
+        startActivity(intent);
     }
 
     public void showWebView() {
