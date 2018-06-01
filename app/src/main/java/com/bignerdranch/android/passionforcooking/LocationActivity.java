@@ -65,7 +65,6 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
         }
-
         if (!CheckGooglePlayServices()) {
             Log.d("onCreate", "Finishing test case since Google Play Services are not available");
             finish();
@@ -91,6 +90,16 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         }
         return true;
     }
+
+    protected synchronized void buildGoogleApiClient() {
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+        googleApiClient.connect();
+    }
+
 
     //MENU BAR
     @Override
@@ -129,14 +138,6 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         }
     }
 
-    protected synchronized void buildGoogleApiClient() {
-        googleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build();
-        googleApiClient.connect();
-    }
 
     @Override
     public void onConnected(Bundle bundle) {
@@ -187,12 +188,10 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
     @Override
     public void onLocationChanged(Location location) {
         Log.d("onLocationChanged", "entered");
-
         mLastLocation = location;
         if (mCurrLocationMarker != null) {
             mCurrLocationMarker.remove();
         }
-
         latitude = location.getLatitude();
         longitude = location.getLongitude();
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
